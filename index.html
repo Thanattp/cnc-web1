@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Nameplate Engraving Machine</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Noto+Sans+Thai:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Thai', 'sans-serif'],
+                    },
+                    colors: {
+                        makerDark: '#121212',
+                        makerCard: '#1e1e1e',
+                        makerCardHover: '#2a2a2a',
+                        brandGreen: '#4CAF50',
+                        brandGreenHover: '#45a049',
+                    }
+                }
+            }
+        }
+
+        // Function to copy text to clipboard
+        function copyToClipboard(text, buttonId) {
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            const btn = document.getElementById(buttonId);
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-green-400"></i>';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2000);
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0f0f0f; /* โค้ดเดิม: สีพื้นหลังสำรอง */
+            color: #e0e0e0;
+            
+            /* ==========================================================
+               ส่วนที่ปรับปรุงใหม่: เปลี่ยนจาก External URL มาใช้ Local Path ในโฟลเดอร์
+               เพื่อความสะดวกในการอัพโหลดและรันบน Web Server ตัวเอง
+               ========================================================== */
+            background-image: url('assets/bg.jpg'); /* อ้างอิงรูปภาพ bg.jpg จากโฟลเดอร์ assets */
+            background-size: cover;       /* ให้รูปภาพขยายเต็มหน้าจอ */
+            background-position: center;  /* จัดให้อยู่กึ่งกลาง */
+            background-attachment: fixed; /* ทำให้พื้นหลังอยู่กับที่เวลาเลื่อนหน้าเว็บ (Parallax effect) */
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #121212; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans selection:bg-brandGreen selection:text-white">
+
+    <!-- Top Navigation Bar (MakerWorld Style) -->
+    <nav class="bg-[#181818] border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- โค้ดเดิม (คอมเมนต์ไว้เพื่อรักษาโครงสร้างเดิมตามกฎข้อ 1) -->
+            <!-- <div class="flex items-center justify-between h-16"> -->
+            
+            <!-- ส่วนที่ปรับปรุงใหม่: เปลี่ยนจาก h-16 เป็น py-4 min-h-[100px] เพื่อขยายพื้นที่ Navbar ให้รองรับโลโก้ขนาดใหญ่ -->
+            <div class="flex items-center justify-between py-4 min-h-[100px]">
+                <!-- Logos Area -->
+                <div class="flex items-center gap-4">
+                    
+                    <!-- ส่วนที่เพิ่มเข้ามาใหม่: ปรับขนาดรูปภาพโลโก้ให้ใหญ่ขึ้นระดับ h-20 ถึง h-24 (ความสูงประมาณ 80-96px) 
+                         เพื่อให้มีขนาดใหญ่ใกล้เคียงและมองเห็นชัดเจนเท่าคำว่า TREE NAMEPLATE ตามภาพอ้างอิง -->
+                    <img src="assets/logo.png" alt="IT CIT KMUTNB Control Hub" width="1106" height="225" class="h-20 md:h-24 w-auto object-contain" onerror="this.src='https://placehold.co/1106x225/222/FFF?text=IT+CIT+KMUTNB+|+Control+Hub'">
+
+                    <!-- โค้ดเดิม (ทำการคอมเมนต์ไว้เพื่อไม่ให้โค้ดสูญหายและคงโครงสร้างเดิมไว้ตามกฎข้อ 1) -->
+                    <!--
+                    <div class="flex gap-2">
+                        <div class="w-10 h-10 bg-blue-900 rounded flex items-center justify-center text-white font-bold text-xs shadow-inner">IT</div>
+                        <div class="w-10 h-10 bg-yellow-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-inner">CIT</div>
+                        <div class="w-10 h-10 bg-red-800 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-inner">KMUTNB</div>
+                    </div>
+                    <span class="text-gray-300 font-semibold tracking-wide hidden sm:block border-l border-gray-600 pl-4 ml-2">Control Hub</span>
+                    -->
+
+                </div>
+                
+                <!-- Right Side Nav -->
+                <!--div class="flex items-center">
+                    <a href="http://192.168.4.1" target="_blank" class="bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors border border-gray-700 flex items-center gap-2">
+                        <i class="fa-solid fa-desktop"></i> Open WebUI
+                    </a>
+                </div-->
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- ==========================================
+             ส่วนที่เพิ่มเข้ามาใหม่: กรอบสีดำล้อมเนื้อหาทั้งหมด 
+             ใช้เทคนิค Glassmorphism (bg-black/85 + backdrop-blur-md)
+             เพื่อให้ข้อความลอยเด่น ไม่กลืนไปกับรูปภาพพื้นหลังด้านหลัง
+             ========================================== -->
+        <div class="bg-black/85 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-gray-800 shadow-2xl">
+            
+            <!-- Header Section -->
+            <div class="mb-10 text-center lg:text-left">
+                <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600 uppercase tracking-tight mb-2">
+                    Tree Nameplate
+                    <span class="block text-2xl md:text-4xl mt-1 text-gray-100">Engraving Machine</span>
+                </h1>
+                <p class="text-brandGreen font-medium text-lg tracking-widest uppercase">With CNC-Based Control Software</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Left Column: Instructions -->
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-1 h-8 bg-brandGreen rounded-full"></div>
+                        <h2 class="text-2xl font-bold text-white">ขั้นตอนการใช้งาน</h2>
+                    </div>
+
+                    <!-- Step 1: WiFi Card -->
+                    <div class="bg-makerCard hover:bg-makerCardHover border border-gray-800 rounded-2xl p-6 transition-all duration-300 shadow-lg group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-wifi text-6xl text-brandGreen"></i>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center text-brandGreen">
+                                <i class="fa-solid fa-network-wired text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-100">1. เชื่อมต่อ WIFI</h3>
+                        </div>
+                        
+                        <div class="space-y-3 pl-16 relative z-10">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-[#181818] p-3 rounded-lg border border-gray-700">
+                                <div class="mb-2 sm:mb-0">
+                                    <span class="text-gray-400 text-sm block">WIFI Name</span>
+                                    <span class="font-mono text-lg text-white font-bold">TREECNC_Engraver</span>
+                                </div>
+                                <button id="btn-copy-wifi" onclick="copyToClipboard('TREECNC_ENGRAVER', 'btn-copy-wifi')" class="text-gray-400 hover:text-brandGreen transition-colors p-2 bg-[#252525] rounded-md border border-gray-700 hover:border-brandGreen" title="Copy WIFI Name">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-[#181818] p-3 rounded-lg border border-gray-700">
+                                <div class="mb-2 sm:mb-0">
+                                    <span class="text-gray-400 text-sm block">Password</span>
+                                    <span class="font-mono text-lg text-brandGreen font-bold tracking-wider">cncadmin123</span>
+                                </div>
+                                <button id="btn-copy-pass1" onclick="copyToClipboard('CNCADMIN123', 'btn-copy-pass1')" class="text-gray-400 hover:text-brandGreen transition-colors p-2 bg-[#252525] rounded-md border border-gray-700 hover:border-brandGreen" title="Copy Password">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Login Card -->
+                    <div class="bg-makerCard hover:bg-makerCardHover border border-gray-800 rounded-2xl p-6 transition-all duration-300 shadow-lg group relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                            <i class="fa-solid fa-globe text-6xl text-brandGreen"></i>
+                        </div>
+
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 bg-gray-800 rounded-xl flex items-center justify-center text-brandGreen">
+                                <i class="fa-solid fa-right-to-bracket text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-gray-100">2. เข้าสู่ระบบ WEBPAGE</h3>
+                        </div>
+                        
+                        <p class="text-gray-400 mb-4 pl-16">เข้าผ่าน IP ด้านล่าง หรือ Scan QR-Code ด้านขวา</p>
+
+                        <div class="space-y-3 pl-16 relative z-10">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-[#181818] p-3 rounded-lg border border-gray-700">
+                                <div class="mb-2 sm:mb-0">
+                                    <span class="text-gray-400 text-sm block">User</span>
+                                    <span class="font-mono text-lg text-white font-bold">admin</span>
+                                </div>
+                                <button id="btn-copy-user" onclick="copyToClipboard('ADMIN', 'btn-copy-user')" class="text-gray-400 hover:text-brandGreen transition-colors p-2 bg-[#252525] rounded-md border border-gray-700 hover:border-brandGreen" title="Copy User">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between bg-[#181818] p-3 rounded-lg border border-gray-700">
+                                <div class="mb-2 sm:mb-0">
+                                    <span class="text-gray-400 text-sm block">Password</span>
+                                    <span class="font-mono text-lg text-brandGreen font-bold tracking-wider">password</span>
+                                </div>
+                                <button id="btn-copy-pass2" onclick="copyToClipboard('PASSWORD', 'btn-copy-pass2')" class="text-gray-400 hover:text-brandGreen transition-colors p-2 bg-[#252525] rounded-md border border-gray-700 hover:border-brandGreen" title="Copy Password">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column: Visuals & Actions -->
+                <div class="space-y-6">
+                    
+                    <!-- Machine Preview Card -->
+                    <div class="bg-makerCard border border-gray-800 rounded-2xl shadow-lg flex flex-col items-center justify-center aspect-video relative overflow-hidden group">
+                        <!-- แทนที่ลิงก์ใน src="..." ด้วยที่อยู่รูปภาพ CNC ของคุณ -->
+                        <img src="assets/cnc.jpg" alt="CNC Machine Preview" class="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x400/111/333?text=CNC+Image'">
+                        
+                        <!-- Gradient overlay เพื่อให้ตัวหนังสืออ่านง่ายขึ้น -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent z-10 opacity-90"></div>
+                        <p class="absolute bottom-4 left-4 z-20 text-sm text-gray-200 font-medium drop-shadow-md">CNC Machine Preview</p>
+                    </div>
+
+                    <!-- Action Card (QR & Button) -->
+                    <div class="bg-gradient-to-b from-[#1e1e1e] to-[#151515] border border-gray-800 rounded-2xl p-6 shadow-xl flex flex-col items-center">
+                        
+                        <h3 class="text-lg font-semibold text-gray-300 mb-4 tracking-widest">SCAN ME</h3>
+                        
+                        <!-- Auto-generated QR Code pointing to the IP -->
+                        <div class="bg-white p-3 rounded-xl mb-6 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=http://192.168.4.1&margin=0" alt="QR Code" class="w-40 h-40">
+                        </div>
+
+                        <div class="w-full text-center mb-6">
+                            <span class="text-gray-500 text-sm block mb-1">IP-WEBPAGE</span>
+                            <span class="font-mono text-xl text-white bg-[#111] py-2 px-4 rounded-lg border border-gray-700 block select-all">
+                                http://192.168.4.1
+                            </span>
+                        </div>
+
+                        <!-- Main Action Button -->
+                        <a href="http://192.168.4.1" target="_blank" class="w-full group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-brandGreen rounded-xl hover:bg-brandGreenHover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brandGreen focus:ring-offset-gray-900 shadow-[0_0_15px_rgba(76,175,80,0.3)] hover:shadow-[0_0_25px_rgba(76,175,80,0.5)] hover:-translate-y-1">
+                            <span class="mr-2 text-lg">เข้าสู่หน้าควบคุม (Connect)</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div> <!-- ปิด Div ส่วนที่เพิ่มเข้ามาใหม่ (กรอบสีดำล้อมเนื้อหา) -->
+    </main>
+
+    <!-- Footer -->
+    <!--footer class="border-t border-gray-800 mt-auto py-6 text-center text-gray-500 text-sm">
+        <p>&copy; 2026 College of Industrial Technology, KMUTNB. All rights reserved.</p>
+    </footer-->
+
+</body>
+</html>
